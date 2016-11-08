@@ -78,7 +78,60 @@ public class Solution {
      * @return: A list of strings
      */
     public List<String> anagrams(String[] strs) {
-        return new ArrayList<>();
+
+        List<String> result = new ArrayList<>();
+
+        String[] sortedStrs = new String[strs.length];
+        for (int i = 0; i < strs.length; i++) {
+            char[] charStr = strs[i].toCharArray();
+            Arrays.sort(charStr);
+            sortedStrs[i] = String.valueOf(charStr);
+        }
+
+        for (int i = 0; i < sortedStrs.length; i++) {
+            int count = 0;
+            for (int j = i + 1; j < sortedStrs.length; j++) {
+                if (sortedStrs[i] != null && sortedStrs[j] != null && sortedStrs[i].equals(sortedStrs[j])) {
+                    if (count == 0) {
+                        result.add(strs[i]);
+                    }
+                    result.add(strs[j]);
+                    sortedStrs[j] = null;
+                    count++;
+                }
+            }
+            sortedStrs[i] = null;
+        }
+
+        return result;
+
+    }
+
+    /**
+     * @param A, B: Two string.
+     * @return: the length of the longest common substring.
+     */
+    public int longestCommonSubstring(String A, String B) {
+
+        int length = 0;
+
+        char[] charB = B.toCharArray();
+
+        for (int i = 0; i < B.length(); i++) {
+            String str = String.valueOf(charB[i]);
+            if (length == 0 && (A.indexOf(str) != -1) && str.length() > length) {
+                length = str.length();
+            }
+            for (int j = i + 1; j < B.length(); j++) {
+                str = str + String.valueOf(charB[j]);
+                if ((A.indexOf(str) != -1) && str.length() > length) {
+                    length = str.length();
+                }
+            }
+        }
+
+        return length;
+
     }
 
 }
